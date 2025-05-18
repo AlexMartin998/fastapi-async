@@ -1,7 +1,7 @@
 import logging
 from logging.config import dictConfig
 
-from src.core.config import settings
+from src.core.settings import settings
 
 
 def configure_logging():

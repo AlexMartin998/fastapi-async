@@ -27,21 +27,62 @@ DirTree:
 project/
 ┣ alembic/
 ┃ ┣ versions/
+┃ ┃ ┗ .gitkeep
 ┃ ┣ README
 ┃ ┣ env.py
 ┃ ┗ script.py.mako
 ┣ src/
 ┃ ┣ core/
+┃ ┃ ┣ shared/
+┃ ┃ ┃ ┣ exceptions/
+┃ ┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┃ ┣ custom_exception.py
+┃ ┃ ┃ ┃ ┗ not_found_exception.py
+┃ ┃ ┃ ┣ models/
+┃ ┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┃ ┗ audit_mixin_model.py
+┃ ┃ ┃ ┣ repositories/
+┃ ┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┃ ┗ generic_repository.py
+┃ ┃ ┃ ┣ services/
+┃ ┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┃ ┗ generic_service.py
+┃ ┃ ┃ ┗ __init__.py
 ┃ ┃ ┣ __init__.py
-┃ ┃ ┣ config.py
 ┃ ┃ ┣ database.py
+┃ ┃ ┣ error.py
 ┃ ┃ ┣ logging_cfg.py
-┃ ┃ ┗ routes.py
+┃ ┃ ┣ middleware.py
+┃ ┃ ┣ routes.py
+┃ ┃ ┗ settings.py
+┃ ┣ inventory_settings/
+┃ ┃ ┣ dependencies/
+┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┗ inventory_settings_di.py
+┃ ┃ ┣ models/
+┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┗ product_category_model.py
+┃ ┃ ┣ repositories/
+┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┗ product_category_repository.py
+┃ ┃ ┣ routers/
+┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┗ category_router.py
+┃ ┃ ┣ schemas/
+┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┗ product_category_schema.py
+┃ ┃ ┣ services/
+┃ ┃ ┃ ┣ __init__.py
+┃ ┃ ┃ ┗ product_category_service.py
+┃ ┃ ┗ __init__.py
 ┃ ┣ __init__.py
 ┃ ┗ main.py
 ┣ .env
+┣ .env.example
 ┣ .gitignore
 ┣ README.md
 ┣ alembic.ini
 ┗ requirements.txt
 ```
+
+

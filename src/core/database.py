@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlmodel import SQLModel
 
-from src.core.config import settings
+from src.core.settings import settings
 
 
 # 1. Engine asíncrono con asyncpg

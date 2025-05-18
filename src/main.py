@@ -1,20 +1,25 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
-from src.core.config import settings
 from src.core.database import init_db
+
+
 from src.core.routes import router as health_router
+from src.inventory_settings.routers.category_router import (
+    router as inventory_settings_router,
+)
+from src.core.error import register_all_errors
+from src.core.middleware import register_middleware
 
 
+# constants -------------
 version = "v1"
 version_prefix = f"/api/{version}"
 description = """
-A REST API for a book review web service.
+A REST API for a awesome application.
 
 This REST API can:
-- Create, Read, Update, Delete books
-- Add reviews to books
-- Add tags to books
+- Create, Read, Update, Delete entities
 """
 
 
@@ -33,9 +38,9 @@ async def lifespan(app: FastAPI):
     # Aquí podrías cerrar conexiones o pools si fuera necesario :contentReference[oaicite:6]{index=6}
 
 
-# Instancia de FastAPI con Lifespan
+# init app -------------
 app = FastAPI(
-    title="Bookly",
+    title="My API",
     description=description,
     version=version,
     license_info={"name": "MIT License",
@@ -47,11 +52,21 @@ app = FastAPI(
     },
     terms_of_service="https://example.com/tos",
     openapi_url=f"{version_prefix}/openapi.json",
-    docs_url=f"{version_prefix}/docs",
+    docs_url=f"{version_prefix}/swagger",
     redoc_url=f"{version_prefix}/redoc",
     # Aquí pasamos el context manager en lugar de on_event :contentReference[oaicite:7]{index=7}
     lifespan=lifespan
 )
 
-# Incluimos routers tras el lifespan
+
+# handlers and middleware -------------
+register_all_errors(app)
+register_middleware(app)
+
+
+# routers --------------------------------
 app.include_router(health_router, prefix=version_prefix)
+app.include_router(
+    inventory_settings_router,
+    prefix=version_prefix,  # /api/v1
+)
