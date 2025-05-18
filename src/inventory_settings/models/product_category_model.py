@@ -9,6 +9,11 @@ class ProductCategoryBase(SQLModel):
     name: str = Field(index=True, max_length=100)
     description: Optional[str] = Field(default=None, max_length=500)
     is_active: bool = Field(default=True)
+    code: Optional[str] = Field(
+        default=None,
+        max_length=200,
+        sa_column_kwargs={"unique": True}
+    )
 
 
 class ProductCategory(AuditMixinModel, ProductCategoryBase, table=True):

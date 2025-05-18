@@ -25,7 +25,7 @@ class Settings(BaseSettings):
 
     @field_validator("CORS_ORIGINS", "ALLOWED_HOSTS", mode="before")
     def parse_env_list(cls, value):
-        print('------->', value, type(value), '<-------')
+        # print('------->', value, type(value), '<-------')
         if isinstance(value, str):
             return [item.strip() for item in value.split(",") if item.strip()]
         return value or []

@@ -20,6 +20,15 @@ alembic init alembic
 
 ```
 
+Migraciones:
+Como es async mi cnofig, debo colocar manualament en cada file `import sqlmodel` para q no se rompa. Luego ya se van agregando migraciones y se las corre con estos dos comandos.
+
+```sh
+alembic revision --autogenerate -m "Fix code field annotation in ProductCategory"
+alembic upgrade head
+```
+
+
 
 
 DirTree:
@@ -84,5 +93,24 @@ project/
 ┣ alembic.ini
 ┗ requirements.txt
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

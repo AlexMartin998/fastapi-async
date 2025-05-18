@@ -29,8 +29,10 @@ AsyncSessionFactory = sessionmaker(
 # 3. Inicialización de esquema (solo DEV)
 async def init_db():
     async with async_engine.begin() as conn:
-        if settings.ENV == "dev":
-            await conn.run_sync(SQLModel.metadata.create_all)
+        pass
+        # ## dev to automatically create tables ---
+        # if settings.ENV == "dev":
+        #     await conn.run_sync(SQLModel.metadata.create_all)
         # En prod, usar Alembic
 
 
