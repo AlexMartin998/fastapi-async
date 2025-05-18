@@ -1,0 +1,86 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VSCode / PyCharm
+.vscode/
+.idea/
+
+# macOS / Linux
+.DS_Store
+*.swp
+
+# Logs
+*.log
+
+# Local env files
+.env
+.env.*
+
+# Testing & coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+.cache
+.pytest_cache/
+.junit.xml
+
+# Migrations (opcional si se autogeneran)
+# alembic/versions/
+
+# Static files / build artifacts
+staticfiles/
+dist/
+build/
+
+# Docker
+*.pid
+*.sock
+*.pid.lock
+docker-compose.override.yml
+
+# Python packaging
+.eggs/
+*.egg-info/
+.eggs-info/
+*.egg
+pip-wheel-metadata/
+__pypackages__/
+
+# MyPy / Pylint / Ruff
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+ruff_cache/
+
+# SQLite or test DBs
+*.sqlite3
+*.db
+*.bak
+
+# Coverage reports
+coverage/
+site/
+
+# Node (si usas frontend dentro del mismo repo)
+node_modules/
+npm-debug.log*
+
+# Editor-specific
+*.sublime-workspace
+*.sublime-project
+
+# Jupyter (por si se usan para pruebas)
+.ipynb_checkpoints/
