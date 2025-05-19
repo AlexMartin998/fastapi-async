@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query, status, Depends
+from fastapi import APIRouter, status, Depends
 from typing import List
 
 
@@ -17,13 +17,33 @@ router = APIRouter(prefix="/categories", tags=["categories"])
 
 
 
+from fastapi_filter import FilterDepends
+from sqlmodel import select
+from src.core.database import get_session, AsyncSession
+from src.inventory_settings.models.product_category_model import ProductCategory
+from src.inventory_settings.filters.product_category_filter import (
+    ProductCategoryFilter
+)
+
 @router.get("/", response_model=List[ProductCategoryRead])
 async def list_categories(
-    offset: int = Query(0, ge=0),
-    limit: int = Query(100, le=200),
-    service: CategoryService = Depends(get_category_service),
+    category_filter: ProductCategoryFilter = FilterDepends(ProductCategoryFilter),
+    # category_filter: FilterDepends = FilterDepends(make_filter_for_model(ProductCategory)),
+    session:        AsyncSession    = Depends(get_session),
 ):
-    return await service.find_all(offset, limit)
+    query  = category_filter.filter(select(ProductCategory))
+    result = await session.execute(query)       # execute() existe aquí
+    return result.scalars().all()               # scalars() extrae tus modelos
+
+
+
+# @router.get("/", response_model=List[ProductCategoryRead])
+# async def list_categories(
+#     offset: int = Query(0, ge=0),
+#     limit: int = Query(100, le=200),
+#     service: CategoryService = Depends(get_category_service),
+# ):
+#     return await service.find_all(offset, limit)
 
 
 @router.get("/{category_id}", response_model=ProductCategoryRead)
