@@ -55,3 +55,11 @@ def make_filter_for_model(model: Type[SQLModel]) -> Type[Filter]:
     )
     AutoFilter.Constants.model = model
     return AutoFilter
+
+
+# ----------------
+from typing import Callable
+from sqlalchemy.sql import Select
+
+ModelSelect = Select
+FilterHook = Callable[[ModelSelect], ModelSelect]

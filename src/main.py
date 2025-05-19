@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi_pagination import add_pagination
 
 from src.core.database import init_db
 
@@ -70,3 +71,7 @@ app.include_router(
     inventory_settings_router,
     prefix=version_prefix,  # /api/v1
 )
+
+
+# helpers -------------------------------
+add_pagination(app)

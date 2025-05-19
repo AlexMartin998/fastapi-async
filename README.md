@@ -10,7 +10,7 @@ pip install fastapi "uvicorn[standard]" sqlmodel pydantic-settings python-dotenv
 
 
 # asycn engine db
-pip install fastapi "uvicorn[standard]" sqlmodel pydantic-settings python-dotenv alembic asyncpg psycopg2-binary gunicorn fastapi-filter
+pip install fastapi "uvicorn[standard]" sqlmodel pydantic-settings python-dotenv alembic asyncpg psycopg2-binary gunicorn fastapi-filter "fastapi-pagination[sqlalchemy]"
 
 ```
 
@@ -93,7 +93,6 @@ project/
 ┣ alembic.ini
 ┗ requirements.txt
 ```
-
 
 
 
