@@ -1,7 +1,5 @@
-# src/core/shared/repositories/generic_repository.py
-
 from typing import Generic, List, Optional, Type, TypeVar
-from sqlmodel.ext.asyncio.session import AsyncSession
+from src.core.database import AsyncSession
 from sqlmodel import select, SQLModel
 
 ModelType = TypeVar("ModelType", bound=SQLModel)
@@ -15,12 +13,18 @@ class GenericRepository(Generic[ModelType]):
         self.session = session
 
     async def find_all(
-        self, offset: int = 0, limit: int = 100
+        self, offset: int = 0, limit: int = 10, filters=None
     ) -> List[ModelType]:
-        result = await self.session.execute(
-            select(self.model).offset(offset).limit(limit)
-        )
-        return result.scalars().all()
+        if filters:
+            query = filters.filter(
+                select(self.model).offset(offset).limit(limit))
+            result = await self.session.execute(query)
+            return result.scalars().all()
+        else:
+            result = await self.session.execute(
+                select(self.model).offset(offset).limit(limit)
+            )
+            return result.scalars().all()
 
     async def find_one(self, obj_id: int) -> Optional[ModelType]:
         return await self.session.get(self.model, obj_id)

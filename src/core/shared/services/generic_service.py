@@ -13,8 +13,8 @@ class GenericService(Generic[ModelType]):
     def __init__(self, repository):
         self.repo = repository  # instancia de GenericRepository
 
-    async def find_all(self, offset: int, limit: int) -> List[ModelType]:
-        return await self.repo.find_all(offset, limit)
+    async def find_all(self, offset: int, limit: int, filters=None) -> List[ModelType]:
+        return await self.repo.find_all(offset, limit, filters)
 
     async def find_one(self, obj_id: int) -> ModelType:
         obj = await self.repo.find_one(obj_id)
