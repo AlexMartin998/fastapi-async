@@ -38,6 +38,11 @@ uvicorn src.main:app \
   --port 8009 \
   --reload
 ```
+Si es un nuevo ambiente con DB en cero
+```sh
+alembic upgrade head
+```
+Ahi si levantar de nuevo con el uviconr
 
 
 
