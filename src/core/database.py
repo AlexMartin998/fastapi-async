@@ -1,8 +1,11 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-from sqlmodel import SQLModel
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 
 from src.core.settings import settings
+from src.core.shared.exceptions.conflict_exception import ConflictException
+from src.core.shared.exceptions.generic_exception import GenericException
+from src.core.helpers.db_error_helper import format_db_error
 
 
 # 1. Engine asíncrono con asyncpg
@@ -42,6 +45,29 @@ async def get_session() -> AsyncSession:
         try:
             yield session
             await session.commit()
-        except:
+        except IntegrityError as e:
             await session.rollback()
-            raise
+            data = format_db_error(e)
+            err = data.get("error")
+
+            if err == "unique_violation":
+                # 409 por duplicado
+                raise ConflictException(data["message"], data=data) from e
+
+            if err in ("not_null_violation", "string_too_long", "check_violation"):
+                # 422 datos inválidos
+                raise GenericException(
+                    data["message"], status=422, data=data) from e
+
+            if err == "foreign_key_violation":
+                # 409 o 400 según tu contrato (aquí 409)
+                raise GenericException(
+                    data["message"], status=409, data=data) from e
+
+            # Fallback
+            raise GenericException(
+                "Error de integridad.", status=409, data=data) from e
+        except SQLAlchemyError as e:
+            await session.rollback()
+            raise GenericException(
+                "Error de base de datos.", status=500) from e

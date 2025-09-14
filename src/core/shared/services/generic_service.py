@@ -53,7 +53,6 @@ class GenericService(Generic[ModelType]):
     async def create(self, create_dto) -> ModelType:
         instance = self.repo.model(**create_dto.dict())
         created = await self.repo.create(instance)
-        await self.repo.commit()
         return created
 
     async def update(self, obj_id: int, update_dto) -> ModelType:
@@ -61,10 +60,8 @@ class GenericService(Generic[ModelType]):
         for field, value in update_dto.dict(exclude_unset=True).items():
             setattr(obj, field, value)
         updated = await self.repo.update(obj)
-        await self.repo.commit()
         return updated
 
     async def delete(self, obj_id: int) -> None:
         obj = await self.find_one(obj_id)
         await self.repo.delete(obj)
-        await self.repo.commit()
