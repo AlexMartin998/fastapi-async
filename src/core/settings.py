@@ -10,6 +10,12 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str] = Field(default_factory=lambda: ["*"])
     ALLOWED_HOSTS: List[str] = Field(default_factory=lambda: ["*"])
 
+    SECRET_KEY: str
+    PROJECT_NAME: str = "FastAPI Project"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 9
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
     DEBUG: bool = False
     HOST: str = "0.0.0.0"
     PORT: int = 8000
