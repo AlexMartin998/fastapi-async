@@ -73,14 +73,24 @@ class GenericRepository(Generic[ModelType]):
     async def create(self, obj: ModelType) -> ModelType:
         self.session.add(obj)
         await self.session.flush()
+        # Trae id/uuid/created_at/updated_at si los pone el server
+        try:
+            await self.session.refresh(obj)
+        except Exception:
+            pass
         return obj
 
     async def update(self, obj: ModelType) -> ModelType:
         await self.session.flush()
+        # Trae updated_at calculado por DB
+        try:
+            await self.session.refresh(obj, attribute_names=["updated_at"])
+        except Exception:
+            pass
         return obj
 
     async def delete(self, obj: ModelType) -> None:
         await self.session.delete(obj)
 
     async def commit(self) -> None:
-        await self.session.commit()
+        return

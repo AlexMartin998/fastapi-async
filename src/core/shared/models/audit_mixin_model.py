@@ -1,23 +1,23 @@
 from datetime import datetime, timezone
 from sqlmodel import SQLModel, Field
-from sqlalchemy import Column, DateTime, func
+import sqlalchemy as sa
+
+
+def utcnow_py():
+    # fallback en memoria/tests; DB pone su default
+    return datetime.now(timezone.utc)
 
 
 class AuditMixinModel(SQLModel):
     created_at: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc),
-        sa_column=Column(
-            DateTime(timezone=True),
-            nullable=False,
-            server_default=func.now()
-        )
+        default_factory=utcnow_py,
+        nullable=False,
+        sa_type=sa.DateTime(timezone=True),
+        sa_column_kwargs={"server_default": sa.text("timezone('utc', now())")},
     )
     updated_at: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc),
-        sa_column=Column(
-            DateTime(timezone=True),
-            nullable=False,
-            server_default=func.now(),
-            onupdate=func.now()
-        )
+        default_factory=utcnow_py,
+        nullable=False,
+        sa_type=sa.DateTime(timezone=True),
+        sa_column_kwargs={"server_default": sa.text("timezone('utc', now())")},
     )

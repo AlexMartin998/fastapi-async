@@ -5,10 +5,13 @@ from fastapi_pagination import add_pagination
 from src.core.database import init_db
 
 
+# routers -------------
 from src.core.routes import router as health_router
 from src.inventory_settings.routers.category_router import (
     router as inventory_settings_router,
 )
+
+# handlers and middleware -------------
 from src.core.error import register_all_errors
 from src.core.middleware import register_middleware
 
@@ -71,6 +74,7 @@ app.include_router(
     inventory_settings_router,
     prefix=version_prefix,  # /api/v1
 )
+
 
 
 # helpers -------------------------------
